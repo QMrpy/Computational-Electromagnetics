@@ -4,30 +4,30 @@ from scipy import integrate
 from numpy.linalg import inv
 from mpl_toolkits.mplot3d import Axes3D
 
-b=1   #square plate of side 1m
-n=10  #Discretization order
-a=b/(n-1)
-k1=4*3.14159265*8.85e-12
-x=[]
-y=[]
-m=[]
-for i in range(0,n-1):
-    x.append(((2*i+1)*a)/2)
-    y.append(((2*i+1)*a)/2)
+b = 1   #square plate of side 1m
+n = 10  #Discretization order
+a = b / (n - 1)
+k1 = 4 * 3.14159265 * 8.85e-12
+x = []
+y = []
+m = []
+for i in range(0, n - 1):
+    x.append(((2 * i + 1)* a)/2)
+    y.append(((2 * i + 1)* a)/2)
 
-for i in range(0,n-1):
-    for j in range(0,n-1):
-        m.append([x[i],y[j]])
+for i in range(0, n - 1):
+    for j in range(0, n - 1):
+        m.append([x[i], y[j]])
 #print(m)
-v=[]
-for i in range(0,(n-1)**2):
-    f=lambda y,x:1/np.sqrt((x-m[i][0])**2+(y-m[i][1])**2)
-    for k in range(0,(n-1)**2):
-        if(k!=i):
-            c=integrate.dblquad(f,m[k][0]-(a/2),m[k][0]+(a/2),lambda x:m[k][1]-(a/2),lambda x:m[k][1]+(a/2))
+v = []
+for i in range(0, (n-1)**2):
+    f = lambda y, x : 1/np.sqrt((x - m[i][0])**2 + (y - m[i][1])**2)
+    for k in range(0, (n - 1)**2):
+        if(k != i):
+            c = integrate.dblquad(f, m[k][0]-(a/2), m[k][0]+(a/2), lambda x:m[k][1]-(a/2),lambda x:m[k][1]+(a/2))
             v.append(c[0])
-        if(k==i):
-            v.append(8*np.log(1+np.sqrt(2)))
+        if(k == i):
+            v.append(8 * np.log(1+np.sqrt(2)))
 # print(v)
 z=np.empty((n-1)**2)
 z.fill(k1)
